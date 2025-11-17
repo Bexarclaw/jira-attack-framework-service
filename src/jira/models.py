@@ -5,7 +5,7 @@ custom fields, and other entities.
 """
 
 from enum import Enum
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -52,7 +52,7 @@ class CustomField(BaseModel):
         searcherKey: Searcher key for the field
     """
 
-    id: Optional[str] = None
+    id: str | None = None
     name: str
     description: str
     field_type: CustomFieldType = Field(alias="type")
@@ -71,7 +71,7 @@ class CustomFieldOption(BaseModel):
     """
 
     value: str
-    id: Optional[str] = None
+    id: str | None = None
 
 
 class JiraProject(BaseModel):
@@ -87,11 +87,11 @@ class JiraProject(BaseModel):
         templateKey: Project template
     """
 
-    id: Optional[str] = None
+    id: str | None = None
     key: str
     name: str
-    description: Optional[str] = None
-    lead: Optional[str] = None
+    description: str | None = None
+    lead: str | None = None
     projectTypeKey: str = "software"
     templateKey: str = "com.pyxis.greenhopper.jira:gh-simplified-basic"
 
@@ -113,7 +113,7 @@ class JiraIssueFields(BaseModel):
     summary: str
     description: str
     issuetype: dict[str, str]
-    parent: Optional[dict[str, str]] = None
+    parent: dict[str, str] | None = None
     labels: list[str] = Field(default_factory=list)
 
     class Config:
@@ -130,10 +130,10 @@ class JiraIssue(BaseModel):
         self_url: URL to the issue
     """
 
-    id: Optional[str] = None
-    key: Optional[str] = None
+    id: str | None = None
+    key: str | None = None
     fields: JiraIssueFields
-    self_url: Optional[str] = Field(None, alias="self")
+    self_url: str | None = Field(None, alias="self")
 
     class Config:
         populate_by_name = True
@@ -149,10 +149,10 @@ class ScreenConfig(BaseModel):
         tab_id: Tab ID within the screen
     """
 
-    id: Optional[str] = None
+    id: str | None = None
     name: str
-    description: Optional[str] = None
-    tab_id: Optional[str] = None
+    description: str | None = None
+    tab_id: str | None = None
 
 
 class FieldLayoutConfig(BaseModel):

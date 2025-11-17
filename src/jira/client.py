@@ -4,10 +4,9 @@ This module provides a base client for authenticating and making
 requests to the JIRA Cloud REST API.
 """
 
-from typing import Any, Optional
+from typing import Any
 
 import httpx
-from httpx import Response
 
 from src.config import ConfigSettings
 from src.logger import get_logger
@@ -31,7 +30,7 @@ class JiraAuthenticationError(JiraClientError):
 class JiraAPIError(JiraClientError):
     """Exception raised when API request fails."""
 
-    def __init__(self, message: str, status_code: Optional[int] = None, response: Optional[dict] = None):
+    def __init__(self, message: str, status_code: int | None = None, response: dict | None = None):
         """Initialize API error.
 
         Args:
@@ -66,7 +65,7 @@ class JiraClient:
         self.config = config
         self.base_url = config.jira_url.rstrip("/")
         self.auth = (config.jira_username, config.jira_api_token)
-        self.client: Optional[httpx.Client] = None
+        self.client: httpx.Client | None = None
         logger.info("jira_client_initialized", url=self.base_url)
 
     def connect(self) -> None:
@@ -104,7 +103,7 @@ class JiraClient:
             raise JiraAuthenticationError(f"Failed to connect to JIRA: {e}") from e
 
     @with_retry()
-    def get(self, endpoint: str, params: Optional[dict] = None) -> dict[str, Any]:
+    def get(self, endpoint: str, params: dict | None = None) -> dict[str, Any]:
         """Make GET request to JIRA API.
 
         Args:
@@ -141,8 +140,8 @@ class JiraClient:
     def post(
         self,
         endpoint: str,
-        data: Optional[dict] = None,
-        params: Optional[dict] = None,
+        data: dict | None = None,
+        params: dict | None = None,
     ) -> dict[str, Any]:
         """Make POST request to JIRA API.
 
@@ -185,8 +184,8 @@ class JiraClient:
     def put(
         self,
         endpoint: str,
-        data: Optional[dict] = None,
-        params: Optional[dict] = None,
+        data: dict | None = None,
+        params: dict | None = None,
     ) -> dict[str, Any]:
         """Make PUT request to JIRA API.
 
@@ -226,7 +225,7 @@ class JiraClient:
             ) from e
 
     @with_retry()
-    def delete(self, endpoint: str, params: Optional[dict] = None) -> None:
+    def delete(self, endpoint: str, params: dict | None = None) -> None:
         """Make DELETE request to JIRA API.
 
         Args:

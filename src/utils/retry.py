@@ -5,8 +5,9 @@ failed operations with exponential backoff.
 """
 
 import time
+from collections.abc import Callable
 from functools import wraps
-from typing import Any, Callable, Optional, Type, TypeVar
+from typing import Any, TypeVar
 
 import httpx
 
@@ -40,7 +41,7 @@ def with_retry(
     max_attempts: int = 4,
     base_delay: float = 2.0,
     max_delay: float = 16.0,
-    exceptions: tuple[Type[Exception], ...] = (
+    exceptions: tuple[type[Exception], ...] = (
         httpx.HTTPError,
         httpx.NetworkError,
         httpx.TimeoutException,
@@ -66,7 +67,7 @@ def with_retry(
     def decorator(func: Callable[..., T]) -> Callable[..., T]:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> T:
-            last_exception: Optional[Exception] = None
+            last_exception: Exception | None = None
 
             for attempt in range(max_attempts):
                 try:
@@ -126,7 +127,7 @@ class RetryContext:
         max_attempts: int = 4,
         base_delay: float = 2.0,
         max_delay: float = 16.0,
-        exceptions: tuple[Type[Exception], ...] = (httpx.HTTPError,),
+        exceptions: tuple[type[Exception], ...] = (httpx.HTTPError,),
     ) -> None:
         """Initialize retry context.
 

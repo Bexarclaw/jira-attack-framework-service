@@ -4,12 +4,12 @@ This module provides functionality for managing screen configurations
 and field layouts in JIRA.
 """
 
-from typing import Any, Optional
+from typing import Any
 
 from rich.console import Console
 
-from src.jira.client import JiraClient, JiraAPIError
-from src.jira.models import FieldLayoutConfig, ScreenConfig
+from src.jira.client import JiraAPIError, JiraClient
+from src.jira.models import FieldLayoutConfig
 from src.logger import get_logger
 
 logger = get_logger(__name__)

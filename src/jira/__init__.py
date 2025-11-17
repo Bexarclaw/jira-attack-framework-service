@@ -7,7 +7,7 @@ custom fields, issues, and screen configurations.
 from src.jira.client import JiraClient
 from src.jira.custom_fields import CustomFieldManager
 from src.jira.issues import IssueManager
-from src.jira.models import JiraProject, JiraIssue, CustomField
+from src.jira.models import CustomField, JiraIssue, JiraProject
 from src.jira.project import ProjectManager
 from src.jira.screen import ScreenManager
 

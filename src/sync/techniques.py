@@ -4,10 +4,10 @@ This module handles the creation and updating of JIRA issues
 for ATT&CK techniques and sub-techniques.
 """
 
-from typing import Any, Optional
+from typing import Any
 
 from rich.console import Console
-from rich.progress import Progress, BarColumn, TaskProgressColumn, TextColumn
+from rich.progress import BarColumn, Progress, TaskProgressColumn, TextColumn
 
 from src.config import ConfigSettings
 from src.jira.client import JiraClient

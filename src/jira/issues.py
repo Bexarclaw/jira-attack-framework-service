@@ -4,12 +4,11 @@ This module provides functionality for creating and managing
 JIRA issues for ATT&CK techniques.
 """
 
-from typing import Any, Optional
+from typing import Any
 
 from rich.console import Console
-from rich.progress import Progress, TaskID
 
-from src.jira.client import JiraClient, JiraAPIError
+from src.jira.client import JiraAPIError, JiraClient
 from src.jira.models import JiraIssue, JiraIssueFields
 from src.logger import get_logger
 
@@ -92,7 +91,7 @@ class IssueManager:
             logger.error("issue_creation_failed_raw", error=str(e))
             raise
 
-    def get_issue(self, issue_key: str) -> Optional[JiraIssue]:
+    def get_issue(self, issue_key: str) -> JiraIssue | None:
         """Get issue by key.
 
         Args:
@@ -171,7 +170,7 @@ class IssueManager:
     def search_issues(
         self,
         jql: str,
-        fields: Optional[list[str]] = None,
+        fields: list[str] | None = None,
         max_results: int = 50,
         start_at: int = 0,
     ) -> list[dict[str, Any]]:

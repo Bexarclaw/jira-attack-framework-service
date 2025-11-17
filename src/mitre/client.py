@@ -4,9 +4,7 @@ This module provides a client for interacting with the MITRE ATT&CK API
 using the attackcti library.
 """
 
-from typing import Optional
 
-import httpx
 from attackcti import attack_client
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
@@ -58,7 +56,7 @@ class MitreClient:
             config: Application configuration settings
         """
         self.config = config
-        self.client: Optional[attack_client] = None
+        self.client: attack_client | None = None
         logger.info("mitre_client_initialized")
 
     def connect(self) -> None:

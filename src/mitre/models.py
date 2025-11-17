@@ -5,7 +5,6 @@ sub-techniques, and data sources.
 """
 
 from dataclasses import dataclass, field
-from typing import Optional
 
 from pydantic import BaseModel, Field, HttpUrl
 
@@ -23,7 +22,7 @@ class ExternalReference(BaseModel):
     source_name: str
     external_id: str
     url: HttpUrl
-    description: Optional[str] = None
+    description: str | None = None
 
 
 class KillChainPhase(BaseModel):
@@ -81,7 +80,7 @@ class DataSource(BaseModel):
     """
 
     name: str
-    description: Optional[str] = None
+    description: str | None = None
 
 
 class Technique(BaseModel):
@@ -109,7 +108,7 @@ class Technique(BaseModel):
     x_mitre_data_sources: list[str] = Field(default_factory=list)
     x_mitre_is_subtechnique: bool = False
     x_mitre_platforms: list[str] = Field(default_factory=list)
-    x_mitre_version: Optional[str] = None
+    x_mitre_version: str | None = None
     revoked: bool = False
     deprecated: bool = False
 
@@ -130,7 +129,7 @@ class Technique(BaseModel):
         return ""
 
     @property
-    def parent_id(self) -> Optional[str]:
+    def parent_id(self) -> str | None:
         """Get parent technique ID for sub-techniques (e.g., T1003 from T1003.001)."""
         if self.x_mitre_is_subtechnique:
             tech_id = self.technique_id
@@ -175,7 +174,7 @@ class TechniqueCollection:
     techniques: list[Technique] = field(default_factory=list)
     tactics: list[Tactic] = field(default_factory=list)
     data_sources: list[DataSource] = field(default_factory=list)
-    version: Optional[str] = None
+    version: str | None = None
 
     @property
     def parent_techniques(self) -> list[Technique]:
@@ -192,7 +191,7 @@ class TechniqueCollection:
         """Get only active techniques (not revoked or deprecated)."""
         return [t for t in self.techniques if t.is_active]
 
-    def get_technique_by_id(self, technique_id: str) -> Optional[Technique]:
+    def get_technique_by_id(self, technique_id: str) -> Technique | None:
         """Get a technique by its ID.
 
         Args:

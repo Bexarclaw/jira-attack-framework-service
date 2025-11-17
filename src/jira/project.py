@@ -4,11 +4,10 @@ This module provides functionality for creating and managing
 JIRA projects.
 """
 
-from typing import Optional
 
 from rich.console import Console
 
-from src.jira.client import JiraClient, JiraAPIError
+from src.jira.client import JiraAPIError, JiraClient
 from src.jira.models import JiraProject
 from src.logger import get_logger
 
@@ -76,7 +75,7 @@ class ProjectManager:
                 logger.error("project_creation_failed", key=project.key, error=str(e))
                 raise
 
-    def get_project(self, project_key: str) -> Optional[JiraProject]:
+    def get_project(self, project_key: str) -> JiraProject | None:
         """Get project by key.
 
         Args:
@@ -111,7 +110,7 @@ class ProjectManager:
                 logger.error("project_retrieval_failed", key=project_key, error=str(e))
                 raise
 
-    def get_project_id(self, project_key: str) -> Optional[str]:
+    def get_project_id(self, project_key: str) -> str | None:
         """Get project ID from project key.
 
         Args:

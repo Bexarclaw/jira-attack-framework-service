@@ -6,7 +6,7 @@ from JIRA issue data.
 
 import json
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from rich.console import Console
 
@@ -51,8 +51,8 @@ class NavigatorExporter:
         project_key: str,
         output_path: str = "attack2jira.json",
         hide_not_tracked: bool = False,
-        layer_name: Optional[str] = None,
-        layer_description: Optional[str] = None,
+        layer_name: str | None = None,
+        layer_description: str | None = None,
     ) -> Path:
         """Export ATT&CK Navigator layer from JIRA data.
 
@@ -72,7 +72,7 @@ class NavigatorExporter:
             output_path=output_path,
         )
 
-        console.print(f"[cyan]Exporting ATT&CK Navigator layer...[/cyan]")
+        console.print("[cyan]Exporting ATT&CK Navigator layer...[/cyan]")
 
         # Get technique maturity levels from JIRA
         maturity_map = self.technique_sync.get_technique_maturity_levels(project_key)

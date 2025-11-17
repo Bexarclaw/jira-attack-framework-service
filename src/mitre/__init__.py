@@ -5,6 +5,6 @@ MITRE ATT&CK framework data.
 """
 
 from src.mitre.client import MitreClient
-from src.mitre.models import Technique, Tactic, SubTechnique, DataSource
+from src.mitre.models import DataSource, SubTechnique, Tactic, Technique
 
 __all__ = ["MitreClient", "Technique", "Tactic", "SubTechnique", "DataSource"]

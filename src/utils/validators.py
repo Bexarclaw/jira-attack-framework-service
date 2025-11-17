@@ -4,7 +4,6 @@ This module provides validation functions for JIRA and ATT&CK data.
 """
 
 import re
-from typing import Optional
 from urllib.parse import urlparse
 
 from src.logger import get_logger

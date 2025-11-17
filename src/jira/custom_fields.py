@@ -4,11 +4,10 @@ This module provides functionality for creating and managing
 custom fields in JIRA.
 """
 
-from typing import Optional
 
 from rich.console import Console
 
-from src.jira.client import JiraClient, JiraAPIError
+from src.jira.client import JiraAPIError, JiraClient
 from src.jira.models import CustomField, CustomFieldOption, CustomFieldType
 from src.logger import get_logger
 
@@ -105,7 +104,7 @@ class CustomFieldManager:
             logger.error("custom_field_retrieval_failed", error=str(e))
             raise
 
-    def get_custom_field_by_name(self, field_name: str) -> Optional[CustomField]:
+    def get_custom_field_by_name(self, field_name: str) -> CustomField | None:
         """Get custom field by name.
 
         Args:
@@ -144,7 +143,7 @@ class CustomFieldManager:
         logger.warning("custom_field_not_found", name=field_name)
         return None
 
-    def get_custom_field_id(self, field_name: str) -> Optional[str]:
+    def get_custom_field_id(self, field_name: str) -> str | None:
         """Get custom field ID by name.
 
         Args:

@@ -7,7 +7,6 @@ This module coordinates the entire sync process including:
 - Screen configuration
 """
 
-from typing import Optional
 
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
@@ -55,10 +54,10 @@ class SyncOrchestrator:
         self.mitre_client = MitreClient(config)
 
         # Initialize managers (will be set after connection)
-        self.project_manager: Optional[ProjectManager] = None
-        self.field_manager: Optional[CustomFieldManager] = None
-        self.screen_manager: Optional[ScreenManager] = None
-        self.technique_sync: Optional[TechniqueSync] = None
+        self.project_manager: ProjectManager | None = None
+        self.field_manager: CustomFieldManager | None = None
+        self.screen_manager: ScreenManager | None = None
+        self.technique_sync: TechniqueSync | None = None
 
         logger.info("sync_orchestrator_initialized")
 
@@ -96,8 +95,8 @@ class SyncOrchestrator:
 
     def setup_project(
         self,
-        project_name: Optional[str] = None,
-        project_key: Optional[str] = None,
+        project_name: str | None = None,
+        project_key: str | None = None,
     ) -> JiraProject:
         """Set up JIRA project with all required configurations.
 
@@ -246,8 +245,8 @@ class SyncOrchestrator:
 
     def run_full_setup(
         self,
-        project_name: Optional[str] = None,
-        project_key: Optional[str] = None,
+        project_name: str | None = None,
+        project_key: str | None = None,
     ) -> None:
         """Run complete setup: create project and import techniques.
 

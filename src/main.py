@@ -5,15 +5,14 @@ MITRE ATT&CK techniques in JIRA.
 """
 
 import sys
-from typing import Optional
 
 import click
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
-from src.config import get_config, validate_config_file_exists, create_default_env_file
-from src.logger import setup_logging, get_logger
+from src.config import create_default_env_file, get_config, validate_config_file_exists
+from src.logger import get_logger, setup_logging
 
 console = Console()
 logger = get_logger(__name__)
@@ -28,7 +27,7 @@ logger = get_logger(__name__)
     help="Path to .env configuration file",
 )
 @click.pass_context
-def cli(ctx: click.Context, config: Optional[str]) -> None:
+def cli(ctx: click.Context, config: str | None) -> None:
     """JIRA Attack Framework Service - Import MITRE ATT&CK into JIRA.
 
     This tool helps security teams track their defensive coverage against
@@ -96,8 +95,8 @@ def init() -> None:
 @click.pass_context
 def setup(
     ctx: click.Context,
-    project_name: Optional[str],
-    project_key: Optional[str],
+    project_name: str | None,
+    project_key: str | None,
 ) -> None:
     """Set up JIRA project with custom fields and screens.
 
